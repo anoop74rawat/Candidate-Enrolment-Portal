@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olive Corporate Solutions - Candidate Enrollment Portal</title>
+    <style>
+        :root {
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-teal-500-rgb: 33, 128, 141;
+            --color-slate-900-rgb: 19, 52, 59;
+            --color-slate-500-rgb: 98, 108, 113;
+            --color-red-500-rgb: 192, 21, 47;
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-cream-100);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: rgba(98, 108, 113, 1);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-primary-active: var(--color-teal-700);
+            --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+            --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+            --color-error: rgba(192, 21, 47, 1);
+            --color-success: var(--color-teal-500);
+            --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+            --space-8: 8px;
+            --space-12: 12px;
+            --space-16: 16px;
+            --space-24: 24px;
+            --space-32: 32px;
+            --radius-base: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-charcoal-700: rgba(31, 33, 33, 1);
+                --color-charcoal-800: rgba(38, 40, 40, 1);
+                --color-gray-300: rgba(167, 169, 169, 1);
+                --color-teal-300: rgba(50, 184, 198, 1);
+                --color-teal-400: rgba(45, 166, 178, 1);
+                --color-gray-400-rgb: 119, 124, 124;
+                --color-background: var(--color-charcoal-700);
+                --color-surface: var(--color-charcoal-800);
+                --color-text: var(--color-gray-200);
+                --color-text-secondary: rgba(167, 169, 169, 0.7);
+                --color-primary: var(--color-teal-300);
+                --color-primary-hover: var(--color-teal-400);
+                --color-secondary: rgba(var(--color-gray-400-rgb), 0.15);
+                --color-secondary-hover: rgba(var(--color-gray-400-rgb), 0.25);
+                --color-border: rgba(var(--color-gray-400-rgb), 0.3);
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-24);
+        }
+
+        .header {
+            background: var(--color-surface);
+            padding: var(--space-24);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-32);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: var(--space-8);
+            color: var(--color-text);
+        }
+
+        .header p {
+            color: var(--color-text-secondary);
+            font-size: 14px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: var(--space-8);
+            margin-bottom: var(--space-24);
+            border-bottom: 2px solid var(--color-border);
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: var(--space-12) var(--space-24);
+            background: transparent;
+            border: none;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab:hover {
+            color: var(--color-text);
+            background: var(--color-secondary);
+        }
+
+        .nav-tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--color-surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-24);
+            margin-bottom: var(--space-24);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border);
+        }
+
+        .form-group {
+            margin-bottom: var(--space-16);
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-8);
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--color-text);
+        }
+
+        .form-label.required::after {
+            content: " *";
+            color: var(--color-error);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: var(--space-12);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-base);
+            font-size: 14px;
+            background: var(--color-background);
+            color: var(--color-text);
+            transition: border-color 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-focus-ring);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-16);
+        }
+
+        .btn {
+            padding: var(--space-12) var(--space-24);
+            border-radius: var(--radius-base);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn-secondary {
+            background: var(--color-secondary);
+            color: var(--color-text);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-secondary-hover);
+        }
+
+        .btn-danger {
+            background: var(--color-error);
+            color: white;
+        }
+
+        .btn-small {
+            padding: var(--space-8) var(--space-16);
+            font-size: 12px;
+        }
+
+        .alert {
+            padding: var(--space-16);
+            border-radius: var(--radius-base);
+            margin-bottom: var(--space-16);
+            border: 1px solid;
+        }
+
+        .alert-success {
+            background: rgba(var(--color-teal-500-rgb), 0.1);
+            border-color: var(--color-success);
+            color: var(--color-text);
+        }
+
+        .alert-error {
+            background: rgba(var(--color-red-500-rgb), 0.1);
+            border-color: var(--color-error);
+            color: var(--color-text);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .preference-selector {
+            display: flex;
+            gap: var(--space-16);
+            margin-bottom: var(--space-16);
+        }
+
+        .preference-box {
+            flex: 1;
+            padding: var(--space-16);
+            border: 2px dashed var(--color-border);
+            border-radius: var(--radius-base);
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--color-background);
+        }
+
+        .preference-box.filled {
+            border-style: solid;
+            border-color: var(--color-primary);
+            background: rgba(var(--color-teal-500-rgb), 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: var(--space-12);
+            text-align: left;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        th {
+            font-weight: 500;
+            background: var(--color-background);
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background: rgba(var(--color-teal-500-rgb), 0.15);
+            color: var(--color-success);
+        }
+
+        .status-danger {
+            background: rgba(var(--color-red-500-rgb), 0.15);
+            color: var(--color-error);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .preference-selector {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="display: flex; align-items: center; gap: 24px;">
+                <img src="https://agi-prod-file-upload-public-main-use1.s3.amazonaws.com/51c5be4d-988d-4c9d-8dd6-97f939910526" alt="Krishna Maruti Limited" style="height: 80px; width: auto;">
+                <div>
+                    <h1>Krishna Maruti Limited</h1>
+                    <p>Candidate Enrollment &amp; Testing Portal for ITI/Polytechnic Institutes</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('candidate')">Candidate Registration</button>
+            <button class="nav-tab" id="admin-tab-btn" onclick="requestAdminAccess()">Admin Panel</button>
+        </div>
+
+        <div id="candidate-tab" class="tab-content active">
+            <div id="registration-view">
+                <div class="card">
+                    <h2 style="margin-bottom: 24px;">Candidate Registration</h2>
+                    <form id="registration-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Candidate Name</label>
+                                <input type="text" class="form-control" id="candidate-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Date of Birth</label>
+                                <input type="date" class="form-control" id="dob" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Gender</label>
+                                <select class="form-control" id="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Father's Name</label>
+                                <input type="text" class="form-control" id="father-name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Native Village Name</label>
+                                <input type="text" class="form-control" id="village-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Gram Panchayat Mukhiya/Sarpanch Name</label>
+                                <input type="text" class="form-control" id="sarpanch-name">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Gram Panchayat Mukhiya/Sarpanch Mobile Number</label>
+                                <input type="tel" class="form-control" id="sarpanch-mobile">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Native State</label>
+                                <select class="form-control" id="native-state" required onchange="updateNativeDistricts()">
+                                    <option value="">Select State</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Native District</label>
+                                <select class="form-control" id="native-district" required>
+                                    <option value="">Select District</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Primary Mobile Number</label>
+                                <input type="tel" class="form-control" id="primary-mobile" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Alternate Mobile Number</label>
+                                <input type="tel" class="form-control" id="alternate-mobile">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Email ID</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Qualification</label>
+                                <select class="form-control" id="qualification" required onchange="updateTradeOptions();updateCompanyOptions();">
+                                    <option value="">Select Qualification</option>
+                                    <option value="Polytechnic Diploma">Polytechnic Diploma</option>
+                                    <option value="ITI">ITI</option>
+                                    <option value="Graduate">Graduate</option>
+                                    <option value="10th/12th Passout">10th/12th Passout</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Trade/Stream</label>
+                                <select class="form-control" id="trade" required onchange="updateCompanyOptions()">
+                                    <option value="">Select Trade/Stream</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Passing Year</label>
+                                <input type="number" class="form-control" id="passing-year" min="2000" max="2026" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Institution State</label>
+                                <select class="form-control" id="institute-state" required onchange="updateInstituteDistricts()">
+                                    <option value="">Select State</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Institution District</label>
+                                <select class="form-control" id="institute-district" required onchange="updateInstituteNames()">
+                                    <option value="">Select District</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Institute Name</label>
+                                <select class="form-control" id="institute-name" required>
+                                    <option value="">Select Institute</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Institute Type</label>
+                                <select class="form-control" id="institute-type">
+                                    <option value="">Select Type</option>
+                                    <option value="Government Institution">Government Institution</option>
+                                    <option value="Private Institution">Private Institution</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">Institution Contact Number</label>
+                                <input type="tel" class="form-control" id="institute-contact" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label required">Have you done your apprenticeship through NATS/NAPS?</label>
+                                <select class="form-control" id="apprenticeship" required>
+                                    <option value="">Select</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    <option value="Working">Working</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label required">How did you hear about us?</label>
+                                <select class="form-control" id="source" required>
+                                    <option value="">Select</option>
+                                    <option value="Friend/Whatsapp Group/Social Media">Friend/Whatsapp Group/Social Media</option>
+                                    <option value="TPO/Principal">TPO/Principal</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h3 style="margin-top: 32px; margin-bottom: 16px;">Company Preferences</h3>
+                        <p style="color: var(--color-text-secondary); margin-bottom: 16px;">Select up to 3 companies in order of preference based on your qualification</p>
+
+                        <div id="eligible-companies" class="alert alert-error hidden">
+                            Please select your qualification and trade to see eligible companies.
+                        </div>
+
+                        <div class="preference-selector">
+                            <div class="preference-box" id="pref-1">
+                                <strong>1st Preference</strong>
+                                <select class="form-control" id="company-pref-1" style="margin-top: 8px;" onchange="updatePreferences()">
+                                    <option value="">Select Company</option>
+                                </select>
+                            </div>
+                            <div class="preference-box" id="pref-2">
+                                <strong>2nd Preference</strong>
+                                <select class="form-control" id="company-pref-2" style="margin-top: 8px;" onchange="updatePreferences()">
+                                    <option value="">Select Company</option>
+                                </select>
+                            </div>
+                            <div class="preference-box" id="pref-3">
+                                <strong>3rd Preference</strong>
+                                <select class="form-control" id="company-pref-3" style="margin-top: 8px;" onchange="updatePreferences()">
+                                    <option value="">Select Company</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="margin-top: 24px;">Submit Registration</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="test-view" class="hidden">
+                <div class="card">
+                    <h2 style="margin-bottom: 16px;">Online Assessment Test</h2>
+                    <div id="test-info" class="alert alert-success"></div>
+                    <div id="question-container"></div>
+                    <div style="display: flex; gap: 16px; margin-top: 24px;">
+                        <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>Previous</button>
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next</button>
+                        <button class="btn btn-primary hidden" id="submit-test-btn" onclick="submitTest()">Submit Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="result-view" class="hidden">
+                <div class="card">
+                    <h2 style="margin-bottom: 24px;">Test Results</h2>
+                    <div id="result-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="admin-tab" class="tab-content">
+            <div class="card">
+                <h2 style="margin-bottom: 24px;">Candidate Registration Data</h2>
+                <div style="margin-bottom: 32px;">
+                    <p style="color: var(--color-text-secondary); margin-bottom: 16px;">Total Registrations: <strong id="total-registrations">0</strong></p>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table id="candidates-table">
+                        <thead>
+                            <tr>
+                                <th>Reg ID</th>
+                                <th>Name</th>
+                                <th>DOB</th>
+                                <th>Gender</th>
+                                <th>Father's Name</th>
+                                <th>Village</th>
+                                <th>District</th>
+                                <th>State</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Qualification</th>
+                                <th>Trade</th>
+                                <th>Passing Year</th>
+                                <th>Institute</th>
+                                <th>1st Pref</th>
+                                <th>2nd Pref</th>
+                                <th>3rd Pref</th>
+                                <th>Test Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="candidates-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // States and Union Territories of India
+        const statesAndUTs = [
+            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+            "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+            "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+            "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+            "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+            "Uttar Pradesh", "Uttarakhand", "West Bengal",
+            "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+            "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+        ];
+
+        // Districts by State (major districts included)
+        const districtsByState = {
+            "Andhra Pradesh": ["Anantapur", "Chittoor", "East Godavari", "Guntur", "Krishna", "Kurnool", "Prakasam", "Nellore", "Srikakulam", "Visakhapatnam", "Vizianagaram", "West Godavari", "YSR Kadapa"],
+            "Arunachal Pradesh": ["Tawang", "West Kameng", "East Kameng", "Papum Pare", "Kurung Kumey", "Kra Daadi", "Lower Subansiri", "Upper Subansiri", "West Siang", "East Siang", "Siang", "Upper Siang", "Lower Siang", "Lower Dibang Valley", "Dibang Valley", "Anjaw", "Lohit", "Namsai", "Changlang", "Tirap", "Longding"],
+            "Assam": ["Baksa", "Barpeta", "Biswanath", "Bongaigaon", "Cachar", "Charaideo", "Chirang", "Darrang", "Dhemaji", "Dhubri", "Dibrugarh", "Dima Hasao", "Goalpara", "Golaghat", "Hailakandi", "Hojai", "Jorhat", "Kamrup Metropolitan", "Kamrup", "Karbi Anglong", "Karimganj", "Kokrajhar", "Lakhimpur", "Majuli", "Morigaon", "Nagaon", "Nalbari", "Sivasagar", "Sonitpur", "South Salmara-Mankachar", "Tinsukia", "Udalguri", "West Karbi Anglong"],
+            "Bihar": ["Araria", "Arwal", "Aurangabad", "Banka", "Begusarai", "Bhagalpur", "Bhojpur", "Buxar", "Darbhanga", "East Champaran", "Gaya", "Gopalganj", "Jamui", "Jehanabad", "Kaimur", "Katihar", "Khagaria", "Kishanganj", "Lakhisarai", "Madhepura", "Madhubani", "Munger", "Muzaffarpur", "Nalanda", "Nawada", "Patna", "Purnia", "Rohtas", "Saharsa", "Samastipur", "Saran", "Sheikhpura", "Sheohar", "Sitamarhi", "Siwan", "Supaul", "Vaishali", "West Champaran"],
+            "Chhattisgarh": ["Balod", "Baloda Bazar", "Balrampur", "Bastar", "Bemetara", "Bijapur", "Bilaspur", "Dantewada", "Dhamtari", "Durg", "Gariaband", "Gaurela-Pendra-Marwahi", "Janjgir-Champa", "Jashpur", "Kabirdham", "Kanker", "Kondagaon", "Korba", "Koriya", "Mahasamund", "Mungeli", "Narayanpur", "Raigarh", "Raipur", "Rajnandgaon", "Sukma", "Surajpur", "Surguja"],
+            "Goa": ["North Goa", "South Goa"],
+            "Gujarat": ["Ahmedabad", "Amreli", "Anand", "Aravalli", "Banaskantha", "Bharuch", "Bhavnagar", "Botad", "Chhota Udaipur", "Dahod", "Dang", "Devbhoomi Dwarka", "Gandhinagar", "Gir Somnath", "Jamnagar", "Junagadh", "Kheda", "Kutch", "Mahisagar", "Mehsana", "Morbi", "Narmada", "Navsari", "Panchmahal", "Patan", "Porbandar", "Rajkot", "Sabarkantha", "Surat", "Surendranagar", "Tapi", "Vadodara", "Valsad"],
+            "Haryana": ["Ambala", "Bhiwani", "Charkhi Dadri", "Faridabad", "Fatehabad", "Gurugram", "Hisar", "Jhajjar", "Jind", "Kaithal", "Karnal", "Kurukshetra", "Mahendragarh", "Nuh", "Palwal", "Panchkula", "Panipat", "Rewari", "Rohtak", "Sirsa", "Sonipat", "Yamunanagar"],
+            "Himachal Pradesh": ["Bilaspur", "Chamba", "Hamirpur", "Kangra", "Kinnaur", "Kullu", "Lahaul and Spiti", "Mandi", "Shimla", "Sirmaur", "Solan", "Una"],
+            "Jharkhand": ["Bokaro", "Chatra", "Deoghar", "Dhanbad", "Dumka", "East Singhbhum", "Garhwa", "Giridih", "Godda", "Gumla", "Hazaribagh", "Jamtara", "Khunti", "Koderma", "Latehar", "Lohardaga", "Pakur", "Palamu", "Ramgarh", "Ranchi", "Sahebganj", "Seraikela Kharsawan", "Simdega", "West Singhbhum"],
+            "Karnataka": ["Bagalkot", "Ballari", "Belagavi", "Bengaluru Rural", "Bengaluru Urban", "Bidar", "Chamarajanagar", "Chikballapur", "Chikkamagaluru", "Chitradurga", "Dakshina Kannada", "Davanagere", "Dharwad", "Gadag", "Hassan", "Haveri", "Kalaburagi", "Kodagu", "Kolar", "Koppal", "Mandya", "Mysuru", "Raichur", "Ramanagara", "Shivamogga", "Tumakuru", "Udupi", "Uttara Kannada", "Vijayapura", "Yadgir"],
+            "Kerala": ["Alappuzha", "Ernakulam", "Idukki", "Kannur", "Kasaragod", "Kollam", "Kottayam", "Kozhikode", "Malappuram", "Palakkad", "Pathanamthitta", "Thiruvananthapuram", "Thrissur", "Wayanad"],
+            "Madhya Pradesh": ["Agar Malwa", "Alirajpur", "Anuppur", "Ashoknagar", "Balaghat", "Barwani", "Betul", "Bhind", "Bhopal", "Burhanpur", "Chhatarpur", "Chhindwara", "Damoh", "Datia", "Dewas", "Dhar", "Dindori", "Guna", "Gwalior", "Harda", "Hoshangabad", "Indore", "Jabalpur", "Jhabua", "Katni", "Khandwa", "Khargone", "Mandla", "Mandsaur", "Morena", "Narsinghpur", "Neemuch", "Niwari", "Panna", "Raisen", "Rajgarh", "Ratlam", "Rewa", "Sagar", "Satna", "Sehore", "Seoni", "Shahdol", "Shajapur", "Sheopur", "Shivpuri", "Sidhi", "Singrauli", "Tikamgarh", "Ujjain", "Umaria", "Vidisha"],
+            "Maharashtra": ["Ahmednagar", "Akola", "Amravati", "Aurangabad", "Beed", "Bhandara", "Buldhana", "Chandrapur", "Dhule", "Gadchiroli", "Gondia", "Hingoli", "Jalgaon", "Jalna", "Kolhapur", "Latur", "Mumbai City", "Mumbai Suburban", "Nagpur", "Nanded", "Nandurbar", "Nashik", "Osmanabad", "Palghar", "Parbhani", "Pune", "Raigad", "Ratnagiri", "Sangli", "Satara", "Sindhudurg", "Solapur", "Thane", "Wardha", "Washim", "Yavatmal"],
+            "Manipur": ["Bishnupur", "Chandel", "Churachandpur", "Imphal East", "Imphal West", "Jiribam", "Kakching", "Kamjong", "Kangpokpi", "Noney", "Pherzawl", "Senapati", "Tamenglong", "Tengnoupal", "Thoubal", "Ukhrul"],
+            "Meghalaya": ["East Garo Hills", "East Jaintia Hills", "East Khasi Hills", "North Garo Hills", "Ri Bhoi", "South Garo Hills", "South West Garo Hills", "South West Khasi Hills", "West Garo Hills", "West Jaintia Hills", "West Khasi Hills"],
+            "Mizoram": ["Aizawl", "Champhai", "Hnahthial", "Kolasib", "Khawzawl", "Lawngtlai", "Lunglei", "Mamit", "Saiha", "Saitual", "Serchhip"],
+            "Nagaland": ["Dimapur", "Kiphire", "Kohima", "Longleng", "Mokokchung", "Mon", "Peren", "Phek", "Tuensang", "Wokha", "Zunheboto"],
+            "Odisha": ["Angul", "Balangir", "Balasore", "Bargarh", "Bhadrak", "Boudh", "Cuttack", "Debagarh", "Dhenkanal", "Gajapati", "Ganjam", "Jagatsinghpur", "Jajpur", "Jharsuguda", "Kalahandi", "Kandhamal", "Kendrapara", "Kendujhar", "Khordha", "Koraput", "Malkangiri", "Mayurbhanj", "Nabarangpur", "Nayagarh", "Nuapada", "Puri", "Rayagada", "Sambalpur", "Subarnapur", "Sundargarh"],
+            "Punjab": ["Amritsar", "Barnala", "Bathinda", "Faridkot", "Fatehgarh Sahib", "Fazilka", "Ferozepur", "Gurdaspur", "Hoshiarpur", "Jalandhar", "Kapurthala", "Ludhiana", "Mansa", "Moga", "Pathankot", "Patiala", "Rupnagar", "Sahibzada Ajit Singh Nagar", "Sangrur", "Shaheed Bhagat Singh Nagar", "Sri Muktsar Sahib", "Tarn Taran"],
+            "Rajasthan": ["Ajmer", "Alwar", "Banswara", "Baran", "Barmer", "Bharatpur", "Bhilwara", "Bikaner", "Bundi", "Chittorgarh", "Churu", "Dausa", "Dholpur", "Dungarpur", "Hanumangarh", "Jaipur", "Jaisalmer", "Jalore", "Jhalawar", "Jhunjhunu", "Jodhpur", "Karauli", "Kota", "Nagaur", "Pali", "Pratapgarh", "Rajsamand", "Sawai Madhopur", "Sikar", "Sirohi", "Sri Ganganagar", "Tonk", "Udaipur"],
+            "Sikkim": ["East Sikkim", "North Sikkim", "South Sikkim", "West Sikkim"],
+            "Tamil Nadu": ["Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri", "Dindigul", "Erode", "Kallakurichi", "Kancheepuram", "Kanyakumari", "Karur", "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris", "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga", "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore", "Viluppuram", "Virudhunagar"],
+            "Telangana": ["Adilabad", "Bhadradri Kothagudem", "Hyderabad", "Jagtial", "Jangaon", "Jayashankar", "Jogulamba", "Kamareddy", "Karimnagar", "Khammam", "Komaram Bheem", "Mahabubabad", "Mahbubnagar", "Mancherial", "Medak", "Medchal", "Nagarkurnool", "Nalgonda", "Nirmal", "Nizamabad", "Peddapalli", "Rajanna Sircilla", "Rangareddy", "Sangareddy", "Siddipet", "Suryapet", "Vikarabad", "Wanaparthy", "Warangal Rural", "Warangal Urban", "Yadadri Bhuvanagiri"],
+            "Tripura": ["Dhalai", "Gomati", "Khowai", "North Tripura", "Sepahijala", "South Tripura", "Unakoti", "West Tripura"],
+            "Uttar Pradesh": ["Agra", "Aligarh", "Ambedkar Nagar", "Amethi", "Amroha", "Auraiya", "Azamgarh", "Baghpat", "Bahraich", "Ballia", "Balrampur", "Banda", "Barabanki", "Bareilly", "Basti", "Bhadohi", "Bijnor", "Budaun", "Bulandshahr", "Chandauli", "Chitrakoot", "Deoria", "Etah", "Etawah", "Ayodhya", "Farrukhabad", "Fatehpur", "Firozabad", "Gautam Buddha Nagar", "Ghaziabad", "Ghazipur", "Gonda", "Gorakhpur", "Hamirpur", "Hapur", "Hardoi", "Hathras", "Jalaun", "Jaunpur", "Jhansi", "Kannauj", "Kanpur Dehat", "Kanpur Nagar", "Kasganj", "Kaushambi", "Kheri", "Kushinagar", "Lalitpur", "Lucknow", "Maharajganj", "Mahoba", "Mainpuri", "Mathura", "Mau", "Meerut", "Mirzapur", "Moradabad", "Muzaffarnagar", "Pilibhit", "Pratapgarh", "Prayagraj", "Raebareli", "Rampur", "Saharanpur", "Sambhal", "Sant Kabir Nagar", "Shahjahanpur", "Shamli", "Shravasti", "Siddharthnagar", "Sitapur", "Sonbhadra", "Sultanpur", "Unnao", "Varanasi"],
+            "Uttarakhand": ["Almora", "Bageshwar", "Chamoli", "Champawat", "Dehradun", "Haridwar", "Nainital", "Pauri Garhwal", "Pithoragarh", "Rudraprayag", "Tehri Garhwal", "Udham Singh Nagar", "Uttarkashi"],
+            "West Bengal": ["Alipurduar", "Bankura", "Birbhum", "Cooch Behar", "Dakshin Dinajpur", "Darjeeling", "Hooghly", "Howrah", "Jalpaiguri", "Jhargram", "Kalimpong", "Kolkata", "Malda", "Murshidabad", "Nadia", "North 24 Parganas", "Paschim Bardhaman", "Paschim Medinipur", "Purba Bardhaman", "Purba Medinipur", "Purulia", "South 24 Parganas", "Uttar Dinajpur"],
+            "Andaman and Nicobar Islands": ["Nicobar", "North and Middle Andaman", "South Andaman"],
+            "Chandigarh": ["Chandigarh"],
+            "Dadra and Nagar Haveli and Daman and Diu": ["Dadra and Nagar Haveli", "Daman", "Diu"],
+            "Delhi": ["Central Delhi", "East Delhi", "New Delhi", "North Delhi", "North East Delhi", "North West Delhi", "Shahdara", "South Delhi", "South East Delhi", "South West Delhi", "West Delhi"],
+            "Jammu and Kashmir": ["Anantnag", "Bandipora", "Baramulla", "Budgam", "Doda", "Ganderbal", "Jammu", "Kathua", "Kishtwar", "Kulgam", "Kupwara", "Poonch", "Pulwama", "Rajouri", "Ramban", "Reasi", "Samba", "Shopian", "Srinagar", "Udhampur"],
+            "Ladakh": ["Kargil", "Leh"],
+            "Lakshadweep": ["Lakshadweep"],
+            "Puducherry": ["Karaikal", "Mahe", "Puducherry", "Yanam"]
+        };
+
+        // ITI Trades by qualification
+        const itiTrades = [
+            "Electrician", "Fitter", "Welder", "Mechanic Motor Vehicle", "Turner",
+            "Machinist", "Plumber", "Carpenter", "Mechanic Diesel", "Wireman",
+            "Electronics Mechanic", "Refrigeration and Air Conditioning Mechanic",
+            "Computer Operator and Programming Assistant (COPA)", "Draughtsman Mechanical",
+            "Draughtsman Civil", "Sheet Metal Worker", "Mechanic Agricultural Machinery",
+            "Mechanic Tractor", "Mechanic Construction Equipment", "Tool and Die Maker",
+            "Foundryman", "Electroplater", "Painter General", "Sewing Technology",
+            "Cutting and Sewing", "Fashion Design and Technology", "Hair and Skin Care",
+            "Food Production", "Bakery and Confectionery", "Fruit and Vegetable Processing",
+            "Secretarial Practice", "Stenographer and Secretarial Assistant",
+            "Desktop Publishing Operator", "Information Technology and Electronics System Maintenance",
+            "Mechanic Mechatronics", "Mechanic Consumer Electronics", "Instrument Mechanic",
+            "Mechanic Industrial Electronics", "Mechanic Radio and TV", "Mechanic Medical Electronics",
+            "Architectural Draughtsman", "Surveyor", "Mechanic Watch and Clock",
+            "Leather Goods Maker", "Footwear Maker", "Plastic Processing Operator",
+            "Health Sanitary Inspector", "Laboratory Assistant", "Dental Laboratory Technician",
+            "X-Ray Technician", "Mechanic Mining Machinery", "Mine Surveyor"
+        ];
+
+        // Polytechnic/Diploma Trades
+        const polytechnicTrades = [
+            "Mechanical Engineering", "Civil Engineering", "Electrical Engineering",
+            "Electronics and Communication Engineering", "Computer Science and Engineering",
+            "Information Technology", "Chemical Engineering", "Automobile Engineering",
+            "Electronics Engineering", "Instrumentation and Control Engineering",
+            "Production Engineering", "Mining Engineering", "Metallurgical Engineering",
+            "Agricultural Engineering", "Architecture", "Interior Design",
+            "Fashion Designing", "Textile Technology", "Leather Technology",
+            "Printing Technology", "Ceramic Technology", "Plastic Technology",
+            "Tool and Die Making", "Foundry Technology", "Mechatronics",
+            "Biomedical Engineering", "Biotechnology", "Environmental Engineering",
+            "Petroleum Engineering", "Aeronautical Engineering", "Marine Engineering",
+            "Fire and Safety Engineering", "Medical Laboratory Technology",
+            "Pharmacy", "Hotel Management and Catering Technology"
+        ];
+
+        // Graduate streams
+        const graduateStreams = [
+            "B.Tech Mechanical Engineering", "B.Tech Civil Engineering",
+            "B.Tech Electrical Engineering", "B.Tech Electronics and Communication",
+            "B.Tech Computer Science", "B.Tech Information Technology",
+            "B.E. Mechanical", "B.E. Electrical", "B.E. Electronics",
+            "B.Sc. Physics", "B.Sc. Chemistry", "B.Sc. Mathematics",
+            "B.Com", "B.A.", "BBA", "BCA"
+        ];
+
+        // 10th/12th streams
+        const schoolStreams = [
+            "Science Stream", "Commerce Stream", "Arts Stream",
+            "PCM (Physics, Chemistry, Mathematics)", "PCB (Physics, Chemistry, Biology)"
+        ];
+
+        // Sample ITI/Polytechnic institutes by state (major ones)
+        const institutesByState = {
+            "Haryana": [
+                "Government Polytechnic Gurugram", "Government Polytechnic Faridabad",
+                "Government Polytechnic Hisar", "Government Polytechnic Karnal",
+                "Government Polytechnic Panchkula", "Government Polytechnic Rohtak",
+                "Government ITI Gurugram", "Government ITI Faridabad", "Government ITI Ambala",
+                "Government ITI Panipat", "Government ITI Sonipat", "Government ITI Yamunanagar",
+                "CR Polytechnic Rohtak", "PDM Polytechnic Bahadurgarh"
+            ],
+            "Delhi": [
+                "Pusa Institute of Technology", "GB Pant Government Engineering College",
+                "Bhai Parmanand Institute of Business Studies", "Guru Nanak Dev Institute of Technology",
+                "Government ITI Shahdara", "Government ITI Rohini", "Government ITI Narela",
+                "Government ITI Okhla", "Ambedkar Institute of Advanced Communication Technologies and Research"
+            ],
+            "Uttar Pradesh": [
+                "Government Polytechnic Lucknow", "Government Polytechnic Kanpur",
+                "Government Polytechnic Agra", "Government Polytechnic Meerut",
+                "Government Polytechnic Varanasi", "Government Polytechnic Allahabad",
+                "Government ITI Lucknow", "Government ITI Kanpur", "Government ITI Agra",
+                "Government ITI Varanasi", "Government ITI Gorakhpur", "Government ITI Noida"
+            ],
+            "Maharashtra": [
+                "Government Polytechnic Mumbai", "Government Polytechnic Pune",
+                "Government Polytechnic Nagpur", "Government Polytechnic Nashik",
+                "Government Polytechnic Aurangabad", "Veermata Jijabai Technological Institute",
+                "Government ITI Mumbai", "Government ITI Pune", "Government ITI Nagpur",
+                "Government ITI Thane", "Government ITI Kolhapur"
+            ],
+            "Karnataka": [
+                "Government Polytechnic Bangalore", "Government Polytechnic Mysore",
+                "Government Polytechnic Mangalore", "Government Polytechnic Hubli",
+                "Government ITI Bangalore", "Government ITI Mysore", "Government ITI Belgaum",
+                "Government ITI Hubli", "BVB Polytechnic Hubli"
+            ],
+            "Tamil Nadu": [
+                "Government Polytechnic Chennai", "Government Polytechnic Coimbatore",
+                "Government Polytechnic Madurai", "Government Polytechnic Tiruchirappalli",
+                "Government ITI Chennai", "Government ITI Coimbatore", "Government ITI Madurai",
+                "Government ITI Salem", "Central Polytechnic College Chennai"
+            ],
+            "West Bengal": [
+                "Government Polytechnic Kolkata", "Government Polytechnic Kalyani",
+                "Government Polytechnic Durgapur", "Government Polytechnic Jalpaiguri",
+                "Government ITI Kolkata", "Government ITI Durgapur", "Government ITI Siliguri",
+                "Government ITI Howrah", "Calcutta Polytechnic"
+            ],
+            "Rajasthan": [
+                "Government Polytechnic Jaipur", "Government Polytechnic Jodhpur",
+                "Government Polytechnic Kota", "Government Polytechnic Ajmer",
+                "Government ITI Jaipur", "Government ITI Jodhpur", "Government ITI Udaipur",
+                "Government ITI Kota", "Rajasthan Polytechnic College Jaipur"
+            ],
+            "Gujarat": [
+                "L.D. College of Engineering Ahmedabad", "Government Polytechnic Ahmedabad",
+                "Government Polytechnic Rajkot", "Government Polytechnic Surat",
+                "Government ITI Ahmedabad", "Government ITI Surat", "Government ITI Vadodara",
+                "Government ITI Rajkot", "Government Polytechnic Gandhinagar"
+            ],
+            "Madhya Pradesh": [
+                "Government Polytechnic Bhopal", "Government Polytechnic Indore",
+                "Government Polytechnic Jabalpur", "Government Polytechnic Gwalior",
+                "Government ITI Bhopal", "Government ITI Indore", "Government ITI Jabalpur",
+                "Government ITI Gwalior", "Government ITI Ujjain"
+            ],
+            "Bihar": [
+                "Government Polytechnic Patna", "Government Polytechnic Muzaffarpur",
+                "Government Polytechnic Bhagalpur", "Government Polytechnic Darbhanga",
+                "Government ITI Patna", "Government ITI Gaya", "Government ITI Bhagalpur",
+                "Government ITI Muzaffarpur", "Nalanda College of Engineering"
+            ]
+        };
+
+        let companies = [];
+        let questions = [];
+        let currentCandidate = null;
+        let testQuestions = [];
+        let currentQuestionIndex = 0;
+        let answers = {};
+        let attemptCount = 0;
+        let testResults = [];
+        let candidateRegistrations = [];
+        let isAdminAuthenticated = false;
+
+        function initializeApp() {
+            // Initialize state dropdowns
+            populateStateDropdowns();
+
+            // Initialize companies
+            companies = [
+                {
+                    id: 1,
+                    name: "Krishna Maruti Ltd.",
+                    qualifications: ["Polytechnic Diploma", "ITI"],
+                    trades: ["Mechanical Engineering", "Electrical Engineering", "Electrician", "Fitter"]
+                },
+                {
+                    id: 2,
+                    name: "Tata Motors",
+                    qualifications: ["Polytechnic Diploma", "ITI", "Graduate"],
+                    trades: ["Mechanical Engineering", "Electrical Engineering", "Electronics and Communication Engineering", "Fitter", "Welder"]
+                },
+                {
+                    id: 3,
+                    name: "Hero MotoCorp",
+                    qualifications: ["ITI", "Polytechnic Diploma"],
+                    trades: ["Fitter", "Mechanic Diesel", "Mechanic Motor Vehicle", "Automobile Engineering"]
+                }
+            ];
+
+            // Initialize questions (sample)
+            questions = [
+                { id: 1, text: "Which tool is used to measure internal diameter?", options: ["Vernier Caliper", "Micrometer", "Inside Caliper", "Steel Scale"], correct: "C", category: "Technical" },
+                { id: 2, text: "Unit of electric current is:", options: ["Volt", "Ampere", "Ohm", "Watt"], correct: "B", category: "Technical" },
+                { id: 3, text: "Which component is used to convert AC to DC?", options: ["Transistor", "Capacitor", "Diode", "Inductor"], correct: "C", category: "Technical" },
+                { id: 4, text: "What is 25% of 200?", options: ["25", "40", "50", "75"], correct: "C", category: "Mathematics" },
+                { id: 5, text: "Choose the correct sentence:", options: ["He go to factory daily", "He goes to factory daily", "He going to factory daily", "He gone to factory daily"], correct: "B", category: "English" },
+                { id: 6, text: "Which of the following is a heat treatment process?", options: ["Casting", "Forging", "Annealing", "Machining"], correct: "C", category: "Technical" },
+                { id: 7, text: "If a worker earns ₹600 in 5 days, how much will he earn in 10 days?", options: ["₹1000", "₹1100", "₹1200", "₹1500"], correct: "C", category: "Mathematics" },
+                { id: 8, text: "Find the correct synonym of 'Quick':", options: ["Slow", "Fast", "Weak", "Late"], correct: "B", category: "English" },
+                { id: 9, text: "According to Ohm's Law, if Voltage=20V and Resistance=5Ω, then Current is:", options: ["2 A", "4 A", "5 A", "10 A"], correct: "B", category: "Technical" },
+                { id: 10, text: "Which organization manufactures cars in India?", options: ["ISRO", "BHEL", "Maruti Suzuki", "DRDO"], correct: "C", category: "General" },
+                { id: 11, text: "What is the SI unit of force?", options: ["Joule", "Newton", "Watt", "Pascal"], correct: "B", category: "Technical" },
+                { id: 12, text: "What is 15 × 8?", options: ["110", "120", "125", "130"], correct: "B", category: "Mathematics" },
+                { id: 13, text: "Opposite of 'Hot' is:", options: ["Warm", "Cold", "Cool", "Heat"], correct: "B", category: "English" },
+                { id: 14, text: "Which metal is the best conductor of electricity?", options: ["Copper", "Silver", "Gold", "Aluminum"], correct: "B", category: "Technical" },
+                { id: 15, text: "If 3x = 15, then x = ?", options: ["3", "4", "5", "6"], correct: "C", category: "Mathematics" },
+                { id: 16, text: "Capital of India is:", options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], correct: "B", category: "General" },
+                { id: 17, text: "Which device converts mechanical energy to electrical energy?", options: ["Motor", "Generator", "Transformer", "Battery"], correct: "B", category: "Technical" },
+                { id: 18, text: "What is 20% of 500?", options: ["50", "75", "100", "125"], correct: "C", category: "Mathematics" },
+                { id: 19, text: "Choose the correct spelling:", options: ["Recieve", "Receive", "Recive", "Receeve"], correct: "B", category: "English" },
+                { id: 20, text: "Hardest natural substance on Earth is:", options: ["Gold", "Iron", "Diamond", "Platinum"], correct: "C", category: "General" }
+            ];
+        }
+
+        function populateStateDropdowns() {
+            const nativeStateSelect = document.getElementById('native-state');
+            const instituteStateSelect = document.getElementById('institute-state');
+
+            statesAndUTs.forEach(state => {
+                const option1 = document.createElement('option');
+                option1.value = state;
+                option1.textContent = state;
+                nativeStateSelect.appendChild(option1);
+
+                const option2 = document.createElement('option');
+                option2.value = state;
+                option2.textContent = state;
+                instituteStateSelect.appendChild(option2);
+            });
+        }
+
+        function updateNativeDistricts() {
+            const state = document.getElementById('native-state').value;
+            const districtSelect = document.getElementById('native-district');
+            
+            districtSelect.innerHTML = '<option value="">Select District</option>';
+            
+            if (state && districtsByState[state]) {
+                districtsByState[state].forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateInstituteDistricts() {
+            const state = document.getElementById('institute-state').value;
+            const districtSelect = document.getElementById('institute-district');
+            
+            districtSelect.innerHTML = '<option value="">Select District</option>';
+            document.getElementById('institute-name').innerHTML = '<option value="">Select Institute</option>';
+            
+            if (state && districtsByState[state]) {
+                districtsByState[state].forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        function updateInstituteNames() {
+            const state = document.getElementById('institute-state').value;
+            const district = document.getElementById('institute-district').value;
+            const instituteSelect = document.getElementById('institute-name');
+            
+            instituteSelect.innerHTML = '<option value="">Select Institute</option>';
+            
+            if (state && district) {
+                // If we have specific institutes for this state
+                if (institutesByState[state]) {
+                    institutesByState[state].forEach(institute => {
+                        const option = document.createElement('option');
+                        option.value = institute;
+                        option.textContent = institute;
+                        instituteSelect.appendChild(option);
+                    });
+                } else {
+                    // Generic institutes for states not in our database
+                    const genericInstitutes = [
+                        `Government ITI ${district}`,
+                        `Government Polytechnic ${district}`,
+                        `Private ITI ${district}`,
+                        `Private Polytechnic ${district}`
+                    ];
+                    genericInstitutes.forEach(institute => {
+                        const option = document.createElement('option');
+                        option.value = institute;
+                        option.textContent = institute;
+                        instituteSelect.appendChild(option);
+                    });
+                }
+            }
+        }
+
+        function updateTradeOptions() {
+            const qualification = document.getElementById('qualification').value;
+            const tradeSelect = document.getElementById('trade');
+            
+            tradeSelect.innerHTML = '<option value="">Select Trade/Stream</option>';
+            
+            let trades = [];
+            switch(qualification) {
+                case 'ITI':
+                    trades = itiTrades;
+                    break;
+                case 'Polytechnic Diploma':
+                    trades = polytechnicTrades;
+                    break;
+                case 'Graduate':
+                    trades = graduateStreams;
+                    break;
+                case '10th/12th Passout':
+                    trades = schoolStreams;
+                    break;
+            }
+            
+            trades.forEach(trade => {
+                const option = document.createElement('option');
+                option.value = trade;
+                option.textContent = trade;
+                tradeSelect.appendChild(option);
+            });
+        }
+
+        function updateCompanyOptions() {
+            const qualification = document.getElementById('qualification').value;
+            const trade = document.getElementById('trade').value;
+            const pref1 = document.getElementById('company-pref-1');
+            const pref2 = document.getElementById('company-pref-2');
+            const pref3 = document.getElementById('company-pref-3');
+
+            pref1.innerHTML = '<option value="">Select Company</option>';
+            pref2.innerHTML = '<option value="">Select Company</option>';
+            pref3.innerHTML = '<option value="">Select Company</option>';
+
+            if (qualification && trade) {
+                const eligible = companies.filter(c => 
+                    c.qualifications.includes(qualification) && 
+                    c.trades.some(t => trade.includes(t) || t.includes(trade.split(' ')[0]))
+                );
+
+                eligible.forEach(company => {
+                    pref1.innerHTML += `<option value="${company.id}">${company.name}</option>`;
+                    pref2.innerHTML += `<option value="${company.id}">${company.name}</option>`;
+                    pref3.innerHTML += `<option value="${company.id}">${company.name}</option>`;
+                });
+
+                if (eligible.length === 0) {
+                    document.getElementById('eligible-companies').classList.remove('hidden');
+                    document.getElementById('eligible-companies').textContent = 'No companies match your qualification and trade combination.';
+                } else {
+                    document.getElementById('eligible-companies').classList.add('hidden');
+                }
+            }
+        }
+
+        function updatePreferences() {
+            const pref1 = document.getElementById('company-pref-1').value;
+            const pref2 = document.getElementById('company-pref-2').value;
+            const pref3 = document.getElementById('company-pref-3').value;
+
+            document.getElementById('pref-1').classList.toggle('filled', !!pref1);
+            document.getElementById('pref-2').classList.toggle('filled', !!pref2);
+            document.getElementById('pref-3').classList.toggle('filled', !!pref3);
+
+            const pref2Select = document.getElementById('company-pref-2');
+            const pref3Select = document.getElementById('company-pref-3');
+
+            Array.from(pref2Select.options).forEach(option => {
+                option.disabled = (option.value === pref1);
+            });
+
+            Array.from(pref3Select.options).forEach(option => {
+                option.disabled = (option.value === pref1 || option.value === pref2);
+            });
+        }
+
+        function requestAdminAccess() {
+            const password = prompt('Enter admin password:');
+            if (password === 'admin1234') {
+                isAdminAuthenticated = true;
+                switchTab('admin');
+            } else if (password !== null) {
+                alert('Incorrect password. Access denied.');
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+            if (tab === 'candidate') {
+                document.querySelectorAll('.nav-tab')[0].classList.add('active');
+                document.getElementById('candidate-tab').classList.add('active');
+            } else if (tab === 'admin' && isAdminAuthenticated) {
+                document.querySelectorAll('.nav-tab')[1].classList.add('active');
+                document.getElementById('admin-tab').classList.add('active');
+                renderCandidateData();
+            }
+        }
+
+        document.getElementById('registration-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const pref1 = document.getElementById('company-pref-1').value;
+            if (!pref1) {
+                alert('Please select at least your 1st preference company.');
+                return;
+            }
+
+            currentCandidate = {
+                registrationId: 'REG' + Date.now(),
+                registrationDate: new Date().toLocaleString(),
+                name: document.getElementById('candidate-name').value,
+                dob: document.getElementById('dob').value,
+                gender: document.getElementById('gender').value,
+                fatherName: document.getElementById('father-name').value,
+                villageName: document.getElementById('village-name').value,
+                sarpanchName: document.getElementById('sarpanch-name').value,
+                sarpanchMobile: document.getElementById('sarpanch-mobile').value,
+                nativeState: document.getElementById('native-state').value,
+                nativeDistrict: document.getElementById('native-district').value,
+                primaryMobile: document.getElementById('primary-mobile').value,
+                alternateMobile: document.getElementById('alternate-mobile').value,
+                email: document.getElementById('email').value,
+                qualification: document.getElementById('qualification').value,
+                trade: document.getElementById('trade').value,
+                passingYear: document.getElementById('passing-year').value,
+                instituteState: document.getElementById('institute-state').value,
+                instituteDistrict: document.getElementById('institute-district').value,
+                instituteName: document.getElementById('institute-name').value,
+                instituteType: document.getElementById('institute-type').value,
+                instituteContact: document.getElementById('institute-contact').value,
+                apprenticeship: document.getElementById('apprenticeship').value,
+                source: document.getElementById('source').value,
+                preferences: [
+                    pref1,
+                    document.getElementById('company-pref-2').value,
+                    document.getElementById('company-pref-3').value
+                ].filter(p => p),
+                testAttempts: []
+            };
+
+            candidateRegistrations.push(currentCandidate);
+            attemptCount = 0;
+            testResults = [];
+            startTest();
+        });
+
+        function startTest() {
+            if (attemptCount >= 3) {
+                alert('You have exhausted all 3 attempts.');
+                return;
+            }
+
+            const shuffled = [...questions].sort(() => 0.5 - Math.random());
+            testQuestions = shuffled.slice(0, 20);
+            currentQuestionIndex = 0;
+            answers = {};
+
+            document.getElementById('registration-view').classList.add('hidden');
+            document.getElementById('test-view').classList.remove('hidden');
+            document.getElementById('result-view').classList.add('hidden');
+
+            const company = companies.find(c => c.id == currentCandidate.preferences[0]);
+            document.getElementById('test-info').innerHTML = `
+                <strong>Candidate:</strong> ${currentCandidate.name}<br>
+                <strong>Company:</strong> ${company.name}<br>
+                <strong>Qualification:</strong> ${currentCandidate.qualification} - ${currentCandidate.trade}
+            `;
+
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const question = testQuestions[currentQuestionIndex];
+            const container = document.getElementById('question-container');
+
+            container.innerHTML = `
+                <div class="card">
+                    <div style="font-weight: 500; margin-bottom: 8px;">Question ${currentQuestionIndex + 1} of 20</div>
+                    <div style="font-size: 18px; margin-bottom: 16px;">${question.text}</div>
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        ${question.options.map((option, i) => `
+                            <label style="display: flex; align-items: center; padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-base); cursor: pointer; transition: all 0.2s;">
+                                <input type="radio" name="answer" value="${String.fromCharCode(65 + i)}" ${answers[question.id] === String.fromCharCode(65 + i) ? 'checked' : ''} style="margin-right: 12px;">
+                                ${String.fromCharCode(65 + i)}. ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            document.querySelectorAll('input[name="answer"]').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    answers[question.id] = e.target.value;
+                });
+            });
+
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+
+            if (currentQuestionIndex === 19) {
+                document.getElementById('next-btn').classList.add('hidden');
+                document.getElementById('submit-test-btn').classList.remove('hidden');
+            } else {
+                document.getElementById('next-btn').classList.remove('hidden');
+                document.getElementById('submit-test-btn').classList.add('hidden');
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < 19) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        }
+
+        function submitTest() {
+            const unanswered = testQuestions.filter(q => !answers[q.id]).length;
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered questions. Do you want to submit anyway?`)) {
+                    return;
+                }
+            }
+
+            let correctCount = 0;
+            testQuestions.forEach(q => {
+                if (answers[q.id] === q.correct) correctCount++;
+            });
+
+            const score = (correctCount / 20) * 100;
+            const passed = score >= 70;
+            attemptCount++;
+
+            const attemptData = {
+                attempt: attemptCount,
+                score: score,
+                correct: correctCount,
+                total: 20,
+                passed: passed,
+                date: new Date().toLocaleString()
+            };
+
+            testResults.push(attemptData);
+            currentCandidate.testAttempts.push(attemptData);
+            showResults(score, correctCount, passed);
+        }
+
+        function showResults(score, correct, passed) {
+            document.getElementById('test-view').classList.add('hidden');
+            document.getElementById('result-view').classList.remove('hidden');
+
+            const resultContent = document.getElementById('result-content');
+            const company = companies.find(c => c.id == currentCandidate.preferences[0]);
+
+            resultContent.innerHTML = `
+                <div class="alert ${passed ? 'alert-success' : 'alert-error'}">
+                    <h3 style="margin-bottom: 8px;">${passed ? 'Congratulations! You Passed!' : 'Test Not Passed'}</h3>
+                    <p>You scored ${score.toFixed(1)}% (${correct} out of 20 correct)</p>
+                </div>
+
+                <h3 style="margin-top: 24px; margin-bottom: 16px;">Candidate Details</h3>
+                <table>
+                    <tr><td><strong>Name</strong></td><td>${currentCandidate.name}</td></tr>
+                    <tr><td><strong>Email</strong></td><td>${currentCandidate.email}</td></tr>
+                    <tr><td><strong>Mobile</strong></td><td>${currentCandidate.primaryMobile}</td></tr>
+                    <tr><td><strong>Qualification</strong></td><td>${currentCandidate.qualification}</td></tr>
+                    <tr><td><strong>Trade</strong></td><td>${currentCandidate.trade}</td></tr>
+                    <tr><td><strong>1st Preference</strong></td><td>${company.name}</td></tr>
+                    <tr><td><strong>Attempts Used</strong></td><td>${attemptCount} of 3</td></tr>
+                </table>
+
+                ${attemptCount < 3 && !passed ? `
+                    <button class="btn btn-primary" style="margin-top: 24px;" onclick="startTest()">Retake Test</button>
+                ` : ''}
+            `;
+        }
+
+        function renderCandidateData() {
+            const tbody = document.getElementById('candidates-body');
+            document.getElementById('total-registrations').textContent = candidateRegistrations.length;
+
+            tbody.innerHTML = candidateRegistrations.map(candidate => {
+                const company1 = companies.find(c => c.id == candidate.preferences[0]);
+                const company2 = companies.find(c => c.id == candidate.preferences[1]);
+                const company3 = companies.find(c => c.id == candidate.preferences[2]);
+                const latestAttempt = candidate.testAttempts[candidate.testAttempts.length - 1];
+                const status = latestAttempt ? `${latestAttempt.score.toFixed(1)}% (${latestAttempt.passed ? 'Passed' : 'Failed'})` : 'Not Attempted';
+
+                return `
+                    <tr>
+                        <td>${candidate.registrationId}</td>
+                        <td>${candidate.name}</td>
+                        <td>${candidate.dob}</td>
+                        <td>${candidate.gender}</td>
+                        <td>${candidate.fatherName}</td>
+                        <td>${candidate.villageName}</td>
+                        <td>${candidate.nativeDistrict}</td>
+                        <td>${candidate.nativeState}</td>
+                        <td>${candidate.primaryMobile}</td>
+                        <td>${candidate.email}</td>
+                        <td>${candidate.qualification}</td>
+                        <td>${candidate.trade}</td>
+                        <td>${candidate.passingYear}</td>
+                        <td>${candidate.instituteName}</td>
+                        <td>${company1 ? company1.name : 'N/A'}</td>
+                        <td>${company2 ? company2.name : '-'}</td>
+                        <td>${company3 ? company3.name : '-'}</td>
+                        <td><span class="status ${latestAttempt && latestAttempt.passed ? 'status-success' : 'status-danger'}">${status}</span></td>
+                        <td><button class="btn btn-secondary btn-small" onclick="viewCandidateDetails('${candidate.registrationId}')">Details</button></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function viewCandidateDetails(regId) {
+            const candidate = candidateRegistrations.find(c => c.registrationId === regId);
+            if (!candidate) return;
+
+            alert(`
+Candidate Details:
+Name: ${candidate.name}
+Email: ${candidate.email}
+Mobile: ${candidate.primaryMobile}
+Qualification: ${candidate.qualification}
+Trade: ${candidate.trade}
+Total Attempts: ${candidate.testAttempts.length}
+            `);
+        }
+
+        // Initialize the app when page loads
+        initializeApp();
+    </script>
+</body>
+</html>
